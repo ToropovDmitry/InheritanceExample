@@ -11,7 +11,7 @@ public:
 	B(int x) :B() { a = x; }
 	~B() { std::cout << "object of" << typeid(*this).name() << " was destroyed\n"; }
 };
-class D1 : public B {
+class D1 : virtual public B {
 	int b;
 public:
 	D1(int x, int y) : B(y)
@@ -21,7 +21,7 @@ public:
 	};
 	~D1() { std::cout << "object of" << typeid(*this).name() << " was destroyed\n"; }
 };
-class D2 : private B {
+class D2 : virtual private B {
 	int c;
 public:
 	D2(int x, int y) : B(y)
