@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="B" Collapsed="true">
+    <Position X="4" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAEAAAA=</HashCode>
+      <FileName>InheritanceExample.cpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="D1" Collapsed="true">
+    <Position X="2.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAIAQAAAAAAAAA=</HashCode>
+      <FileName>InheritanceExample.cpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="D2" Collapsed="true">
+    <Position X="5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAQAAAAAQAAAAAACAAAAAAAAAAAA=</HashCode>
+      <FileName>InheritanceExample.cpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="D3" Collapsed="true">
+    <Position X="4" Y="7" Width="1.5" />
+    <InheritanceLine Type="D1" ManuallyRouted="true" FixedToPoint="true">
+      <Path>
+        <Point X="3.5" Y="5.941" />
+        <Point X="3.5" Y="6.625" />
+        <Point X="4.562" Y="6.625" />
+        <Point X="4.562" Y="6.876" />
+        <Point X="4.562" Y="6.876" />
+        <Point X="4.562" Y="7" />
+      </Path>
+      <InheritanceModifierLabel ManuallyPlaced="true">
+        <Position X="0.037" Y="0.07" />
+      </InheritanceModifierLabel>
+    </InheritanceLine>
+    <InheritanceLine Type="D2">
+      <InheritanceModifierLabel ManuallyPlaced="true">
+        <Position X="-0.505" Y="0.07" />
+      </InheritanceModifierLabel>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAAAQAAAAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>InheritanceExample.cpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="D4" Collapsed="true">
+    <Position X="4" Y="8.75" Width="1.5" />
+    <InheritanceLine Type="D1" FixedToPoint="true">
+      <Path>
+        <Point X="3.5" Y="5.941" />
+        <Point X="3.5" Y="8.375" />
+        <Point X="4.688" Y="8.375" />
+        <Point X="4.688" Y="8.75" />
+      </Path>
+    </InheritanceLine>
+    <InheritanceLine Type="D2" FixedToPoint="true">
+      <Path>
+        <Point X="5.75" Y="5.941" />
+        <Point X="5.75" Y="8.375" />
+        <Point X="4.875" Y="8.375" />
+        <Point X="4.875" Y="8.75" />
+      </Path>
+      <InheritanceModifierLabel ManuallyPlaced="true">
+        <Position X="-0.505" Y="0.05" />
+      </InheritanceModifierLabel>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAQAAAAAAAAAAAAACAAAAAAAEAAA=</HashCode>
+      <FileName>InheritanceExample.cpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
