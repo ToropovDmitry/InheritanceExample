@@ -3,60 +3,128 @@
 
 #include "stdafx.h"
 #include <iostream>
+#include <string>
+#include <clocale>
 
-class B1 {
-	int a;
+class creature
+{
+private:
+	std::string title;
+	double mass;
+protected:
+	creature() : mass(0.0) {}
+	creature(const creature& obj) : title(obj.title), mass(obj.mass) {}
+	creature(const std::string& _title, double _mass) : title(_title), mass(_mass) {}	
+	virtual ~creature() { std::cout << "creature deleted" << std::endl << std::endl; }	
+	virtual void _print() const { std::cout << "title: " << title << ", mass: " << mass; }	
 public:
-	B1() { std::cout << "object of " << typeid(*this).name() << " was created\n"; }
-	B1(int x) :B1() { a = x; }
-	~B1() { std::cout << "object of " << typeid(*this).name() << " was destroyed\n"; }
-};
-
-class B2 {
-	int b;
-public:
-	B2() { std::cout << "object of " << typeid(*this).name() << " was created\n"; }
-	B2(int x) :B2() { b = x; }
-	~B2() { std::cout << "object of " << typeid(*this).name() << " was destroyed\n"; }
-};
-
-class D1 : private B1, public B2 {
-	int c;
-public:
-	D1(int x, int y, int z) : B1(y), B2(z)
+	void print() const
 	{
-		c = x;
-		std::cout << "object of " << typeid(*this).name() << " was created\n";
-	};
-	~D1() { std::cout << "object of " << typeid(*this).name() << " was destroyed\n"; }
-};
-
-class D2 : public B1, private B2 {
-	int d;
-public:
-
-	D2(int x, int y, int z) : B1(y), B2(z)
-	{
-		d = x;
-		std::cout << "object of " << typeid(*this).name() << " was created\n";
+		std::cout << typeid(*this).name() << ": (";		
+		_print();
+		std::cout << ")" << std::endl;
 	}
-	~D2() { std::cout << "object of " << typeid(*this).name() << " was destroyed\n"; }
+	double get_mass() const 
+	{
+		return mass;
+	}
 };
 
-class D3 : private D1, public D2 {
-	int e;
+class animal : public creature
+{
+private:
+	double speed;
 public:
-	D3(int x, int y, int z, int i, int j, int k, int l) : D1(y, z, i), D2(j, k, l)
+	animal() : creature() {}
+	animal(const animal& obj) : creature(obj), speed(obj.speed) {}
+	animal(const std::string& _title, double _mass, double _speed)
+		: creature(_title, _mass), speed(_speed) {}
+	~animal() { std::cout << "animal deleted" << std::endl; }
+	double get_speed() const
 	{
-		e = x;
-		std::cout << "object of " << typeid(*this).name() << " was created\n";
+		return speed;
 	}
-	~D3() { std::cout << "object of " << typeid(*this).name() << " was destroyed\n"; }
+protected:	
+	void _print() const
+	{
+		creature::_print();
+		std::cout << ", speed: " << speed;
+	}
+	
+};
+
+class bird : virtual public animal
+{
+private:
+	double topfly; 
+public:
+	bird() : animal() {}
+	bird(const bird& obj) : animal(obj), topfly(obj.topfly) {}
+	bird(const std::string& _title, double _mass, double _speed, double _topfly)
+		: animal(_title, _mass, _speed), topfly(_topfly) {}
+	~bird() { std::cout << "bird deleted" << std::endl; }
+protected:
+	void _print() const
+	{
+		animal::_print();
+		std::cout << ", topfly: " << topfly;
+	}
+};
+
+class fish : public animal
+{
+private:
+	double maxdeep;
+public:
+	fish() : animal() {}
+	fish(const fish& obj) : animal(obj), maxdeep(obj.maxdeep) {}
+	fish(const std::string& _title, double _mass, double _speed, double _maxdeep)
+		: animal(_title, _mass, _speed), maxdeep(_maxdeep) {}
+	~fish() { std::cout << "fish deleted" << std::endl; }
+protected:	
+	void _print() const
+	{
+		animal::_print();
+		std::cout << ", maxdeep: " << maxdeep;
+	}
+};
+
+class predator : virtual public animal 
+{
+protected:
+	predator() {}
+public:
+	~predator() {}
+	virtual bool hunt(const animal& obj) = 0;
+};
+
+class eagle : public bird, public predator 
+{
+public:
+	eagle() : bird() {}
+	eagle(const eagle& obj) 
+		: bird(obj),
+		animal(obj) {}
+	eagle(double _mass, double _speed, double _topfly)
+		: bird("", 0, 0, _topfly),
+		animal("Орёл", _mass, _speed) {}
+	bool hunt(const animal& obj)
+	{
+		return obj.get_mass() < bird::get_mass() && obj.get_speed() < bird::get_speed();
+	}
 };
 
 int main()
 {
-	D3 temp(1, 2, 3, 4, 5, 6, 7);
-    return 0;
+	setlocale(0, "Rus");
+	bird raven("Ворона", 0.3, 10, 0.1);
+	eagle eagle(1, 100, 1);
+	fish hammerhead("Рыба-молот", 150, 5, 0.5);
+	raven.print();
+	hammerhead.print();
+	std::cout << "Eagle vs raven: " << eagle.hunt(raven) << std::endl;
+	std::cout << "Eagle vs hammerhead: " << eagle.hunt(hammerhead) << std::endl;
+	std::cout << std::endl;
+	return 0;
 }
 
