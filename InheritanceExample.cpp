@@ -3,216 +3,77 @@
 
 #include "stdafx.h"
 #include <iostream>
-#include <string>
-#include <clocale>
 
-class ComputerGameObject
+class B1
 {
-protected:
-	std::string name;	
-	int mana;	
-	int x;
-	int y;
+	int a;
 public:
-	virtual void draw() = 0;
+	B1() { std::cout << "object of" << typeid(*this).name() << " was created\n"; }
+	B1(int x) :B1() { a = x; }
+	~B1() { std::cout << "object of" << typeid(*this).name() << " was destroyed\n"; }
 };
 
-class Creature : public ComputerGameObject
+class B2
 {
-protected:
-	int health;
-	int stamina;
+	int b;
 public:
-	virtual void move(int dx, int dy) = 0;
+	B2() { std::cout << "object of" << typeid(*this).name() << " was created\n"; }
+	B2(int x) :B2() { b = x; }
+	~B2() { std::cout << "object of" << typeid(*this).name() << " was destroyed\n"; }
 };
 
-class MythologicalAnimal : public Creature
+class D1 : protected B1
 {
+	int c;
 public:
-	MythologicalAnimal() 
+	D1(int x, int y) : B1(y)
 	{
-		this->name = "Мифическое животное";
-		this->health = 100;
-		this->mana = 100;
-		this->stamina = 100;
-		this->x = 0;
-		this->y = 0;
-	}
-	MythologicalAnimal(const MythologicalAnimal& mythologicalAnimal) 
+		c = x;
+		std::cout << "object of" << typeid(*this).name() << " was created\n";
+	};
+	~D1() { std::cout << "object of" << typeid(*this).name() << " was destroyed\n"; }
+};
+	
+class D2 : public B1 
+{
+	int d;
+public:
+	D2(int x, int y) : B1(y)
 	{
-		this->name = mythologicalAnimal.name;
-		this->health = mythologicalAnimal.health;
-		this->mana = mythologicalAnimal.mana;
-		this->stamina = mythologicalAnimal.stamina;
-		this->x = mythologicalAnimal.x;
-		this->y = mythologicalAnimal.y;
-	}
-	MythologicalAnimal(std::string name, int heath, int mana, int stamina, int x, int y)
-	{
-		this->name = name;
-		this->health = heath;
-		this->mana = mana;
-		this->stamina = stamina;
-		this->x = x;
-		this->y = y;
-	}
-	void move(int dx, int dy)
-	{
-		this->x += dx;
-		this->y += dy;
-		if (dx != 0 || dy != 0)
-			std::cout << this->name << " движется в точку с координатами (" << this->x << ";" << this->y << ")" << std::endl;
-		else
-			std::cout << this->name << " стоит на месте, не обращая на вас внимания" << std::endl;
-	}
-	void draw()
-	{
-		std::cout << this->name << " стоит в точке с координатами (" << this->x << ";" << this->y << ")" << std::endl;
-	}
-	~MythologicalAnimal() {}
+		d = x;
+		std::cout << "object of" << typeid(*this).name() << " was created\n";
+	};
+	~D2() { std::cout << "object of" << typeid(*this).name() << " was destroyed\n"; }
 };
 
-class Human : public Creature
+class D3 : protected D2, protected B2 
 {
+	int e;
 public:
-	Human()
+	D3(int x, int y, int z, int i) : D2(y, z), B2(i)
 	{
-		this->name = "Человек";
-		this->health = 100;
-		this->mana = 0;
-		this->stamina = 100;
-		this->x = 0;
-		this->y = 0;
+		e = x;
+		std::cout << "object of" << typeid(*this).name() << " was created\n";
 	}
-	Human(const Human& human)
-	{
-		this->name = human.name;
-		this->health = human.health;
-		this->mana = human.mana;
-		this->stamina = human.stamina;
-		this->x = human.x;
-		this->y = human.y;
-	}
-	Human(std::string name, int heath, int mana, int stamina, int x, int y)
-	{
-		this->name = name;
-		this->health = heath;
-		this->mana = mana;
-		this->stamina = stamina;
-		this->x = x;
-		this->y = y;
-	}
-	void move(int dx, int dy)
-	{
-		this->x += dx;
-		this->y += dy;
-		if (dx != 0 || dy != 0)
-			std::cout << this->name << " движется в точку с координатами (" << this->x << ";" << this->y << ")" << std::endl;
-		else
-			std::cout << this->name << " стоит на месте, не обращая на вас внимания" << std::endl;
-	}
-	void draw()
-	{
-		std::cout << this->name << " стоит в точке с координатами (" << this->x << ";" << this->y << ")" << std::endl;
-	}
-	~Human() {}
+	~D3() { std::cout << "object of" << typeid(*this).name() << " was destroyed\n"; }
 };
 
-class MagicPerson : public Creature
+class D4 : public D1, public D3
 {
+	int f;
 public:
-	MagicPerson()
+	D4(int x, int y, int z, int i, int j, int k, int l) : D1(y, z), D3(z, i, k, l)
 	{
-		this->name = "Волшебное создание";
-		this->health = 100;
-		this->mana = 100;
-		this->stamina = 100;
-		this->x = 0;
-		this->y = 0;
+		f = x;
+		std::cout << "object of" << typeid(*this).name() << " was created\n";
 	}
-	MagicPerson(const MagicPerson& magicPerson)
-	{
-		this->name = magicPerson.name;
-		this->health = magicPerson.health;
-		this->mana = magicPerson.mana;
-		this->stamina = magicPerson.stamina;
-		this->x = magicPerson.x;
-		this->y = magicPerson.y;
-	}
-	MagicPerson(std::string name, int heath, int mana, int stamina, int x, int y)
-	{
-		this->name = name;
-		this->health = heath;
-		this->mana = mana;
-		this->stamina = stamina;
-		this->x = x;
-		this->y = y;
-	}
-	void move(int dx, int dy)
-	{
-		this->x += dx;
-		this->y += dy;
-		if (dx != 0 || dy != 0)
-			std::cout << this->name << " движется в точку с координатами (" << this->x << ";" << this->y << ")" << std::endl;
-		else
-			std::cout << this->name << " стоит на месте, не обращая на вас внимания" << std::endl;
-	}
-	void draw()
-	{
-		std::cout << this->name << " стоит в точке с координатами (" << this->x << ";" << this->y << ")" << std::endl;
-	}
-	~MagicPerson() {}
-};
-
-class MagicThing : public ComputerGameObject
-{
-public:
-	MagicThing()
-	{
-		this->name = "Волшебный предмет";		
-		this->mana = 100;		
-		this->x = 0;
-		this->y = 0;
-	}
-	MagicThing(const MagicThing& magicThing)
-	{
-		this->name = magicThing.name;		
-		this->mana = magicThing.mana;		
-		this->x = magicThing.x;
-		this->y = magicThing.y;
-	}
-	MagicThing(std::string name, int mana, int x, int y)
-	{
-		this->name = name;		
-		this->mana = mana;		
-		this->x = x;
-		this->y = y;
-	}	
-	void draw()
-	{
-		std::cout << this->name << " находиться в точке с координатами (" << this->x << ";" << this->y << ")" << std::endl;
-	}
-	~MagicThing() {}
+	~D4() { std::cout << "object of" << typeid(*this).name() << " was destroyed\n"; }
 };
 
 int main()
 {
-	setlocale(0, "Rus");
-	MythologicalAnimal pegasus = MythologicalAnimal("Пегас", 100, 100, 100, 5, 10);
-	Human perseus = Human("Персей", 100, 50, 100, 5, 10);
-	MagicPerson gorgon = MagicPerson("Медуза Горгона", 100, 100, 100, -11, 0);
-	MagicThing teardrop = MagicThing("Слеза Богов", 1000, -30, -30);
-	teardrop.draw();
-	pegasus.draw();
-	perseus.draw();
-	gorgon.draw();
-	pegasus.move(-10, 0);
-	perseus.move(-10, 0);
-	gorgon.move(-2, -5);
-	pegasus.draw();
-	perseus.draw();
-	gorgon.draw();
-	std::cout << std::endl;
+	D3 temp(100, 200, 300, 400);
+	D4 temp1(1, 2, 3, 4, 5, 6, 7);
 	return 0;
 }
 
